@@ -1,6 +1,6 @@
 {
   "name": "@webresto/cli",
-  "version": "2.0.0",
+  "version": "0.0.4-development",
   "description": "Starter to create node-command-line utilities",
   "main": "index.js",
   "husky": {
@@ -28,10 +28,11 @@
   "scripts": {
     "build": "tsc",
     "commit": "git-cz",
+    "npm": "npm run build && cd ./dist && npm publish --access=public",
     "format:check": "prettier --list-different '{src,__mocks__,bin}/**/*.js'",
     "format:write": "prettier --write '{src,__mocks__,bin}/**/*.js'",
-    "start:help": "ts-node bin/order.bin.ts -h",
-    "start:example": "ts-node bin/order.bin.ts pizza beer",
+    "start:help": "ts-node bin/main.bin.ts -h",
+    "start:example": "ts-node bin/main.bin.ts pizza beer",
     "test": "jest",
     "bump-version": "rjp package.json version $VERSION",
     "test:coverage": "jest --coverage",
@@ -39,8 +40,8 @@
     "semantic-release": "semantic-release"
   },
   "bin": {
-    "@webresto/cli": "./src/bin/order.bin.js",
-    "restaurant": "./src/bin/order.bin.js"
+    "webresto": "./src/bin/main.bin.js",
+    "restaurant": "./src/bin/main.bin.js"
   },
   "repository": {
     "type": "git",
@@ -53,16 +54,18 @@
     "Buildtool",
     "Starter"
   ],
-  "author": "Kevin Kreuzer",
+  "author": "Webresto",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/webresto/cli/issues"
   },
   "homepage": "https://github.com/webresto/cli#readme",
   "dependencies": {
+    "async-shelljs": "^0.1.4",
     "boxen": "^2.1.0",
     "commander": "^2.19.0",
-    "jsonfile": "^5.0.0"
+    "jsonfile": "^5.0.0",
+    "shelljs": "^0.8.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
@@ -73,6 +76,7 @@
     "@semantic-release/git": "^7.0.6",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.3",
+    "@types/shelljs": "^0.8.9",
     "codecov": "^3.1.0",
     "commitizen": "^3.0.5",
     "husky": "^1.2.1",
