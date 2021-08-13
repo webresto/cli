@@ -36,6 +36,15 @@ program
         install(module)
     });
 
+program
+    .command('publish [module]')
+    .description('publish module')
+    .option('-d, --debug', 'Output additional debugging info')
+    .action(async (module) => {
+        // console.log('generate here');
+        publish(module)
+    });
+
 
 
 program
