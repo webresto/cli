@@ -12,20 +12,28 @@ export const install = async (module: any) => {
         throw `Dirrectory ${modulesPath} not found`;
 
     let currentModulePath = process.cwd() + '/modules/' + module;
-    if (fs.existsSync(currentModulePath))
-        throw `Dirrectory ${currentModulePath} was found`;
+    if (fs.existsSync(currentModulePath)) {
+        await exec(
+            `set -x;  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
+        );
+    } 
 
-    if ((await exec('wget --version').code) !== 0) {
-        throw "wget not found"
+    await exec(
+        `set -x;  mkdir -p ${currentModulePath}`
+    );
+        
+    if ((await exec('curl --version').code) !== 0) {
+        throw "curl not found"
     }
 
     if ((await exec('tar --version').code) !== 0) {
         throw "tar not found"
     }
 
+    
 
     await exec(
-        `wget -qO- https://registry.webresto.dev/${module}/${module}.tar.gz | tar xvz - -C ${currentModulePath}`
+        `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
     );
 
 

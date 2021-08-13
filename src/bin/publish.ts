@@ -7,13 +7,9 @@ export const publish = async (module: any) => {
     //     config.silent = true;
     // }
 
-    let modulesPath = process.cwd() + '/modules/';
-    if (!fs.existsSync(modulesPath))
-        throw `Dirrectory ${modulesPath} not found`;
-
     let currentModulePath = process.cwd() + '/modules/' + module;
-    if (fs.existsSync(currentModulePath))
-        throw `Dirrectory ${currentModulePath} was found`;
+    if (!fs.existsSync(currentModulePath))
+        throw `Dirrectory ${currentModulePath} not found`;
 
     if ((await exec('curl --version').code) !== 0) {
         throw "curl not found"
@@ -25,7 +21,7 @@ export const publish = async (module: any) => {
     
 
     await exec(
-        `cd ./modules/${module} && tar -cf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
+        `set -x; cd ./modules/${module} && tar -czvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
     );
 
     console.log(process.cwd(),module);
