@@ -19,8 +19,13 @@ export const publish = async (module: any) => {
         throw "curl not found"
     }
     
+    if ((await exec('tar --version').code) !== 0) {
+        throw "tar not found"
+    }
+    
+
     await exec(
-        `cd ./module/${module} && tar -cf - . | curl -vX POST -F module=@- -F name=123 https://registry.webresto.dev/upload`
+        `cd ./modules/${module} && tar -cf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
     );
 
     console.log(process.cwd(),module);
