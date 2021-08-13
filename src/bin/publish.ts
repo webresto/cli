@@ -22,7 +22,7 @@ export const publish = async (module: any) => {
         
     
         await exec(
-            `set -x; cd ./modules/${module} && tar -czvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
+            `set -x; cd ./modules/${module} && tar --exclude='./node_modules' -czvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
         );
     } else {
         if (!fs.existsSync(process.cwd()+"/package.json"))
@@ -31,7 +31,7 @@ export const publish = async (module: any) => {
         let package_json = require(process.cwd()+"/package.json");
         module = package_json.name;
         await exec(
-            `set -x; cd ${process.cwd()} && tar -czvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
+            `set -x; cd ${process.cwd()} && tar --exclude='./node_modules' -czvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
         );
     }
     

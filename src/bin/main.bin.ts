@@ -5,6 +5,7 @@ import { placeOrder } from '../waiter';
 import { writeFile } from '../file-access';
 import { generate } from "./generate"
 import { upgrade } from "./upgrade"
+import { update } from "./update"
 import { install } from "./install"
 import { publish } from "./publish"
 
@@ -45,7 +46,14 @@ program
         publish(module)
     });
 
-
+program
+    .command('update [module]')
+    .description('update module')
+    .option('-d, --debug', 'Output additional debugging info')
+    .action(async (module) => {
+        // console.log('generate here');
+        update(module)
+    });
 
 program
     .command('upgrade')
