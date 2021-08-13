@@ -5,6 +5,9 @@ import { placeOrder } from '../waiter';
 import { writeFile } from '../file-access';
 import { generate } from "./generate"
 import { upgrade } from "./upgrade"
+import { install } from "./install"
+import { publish } from "./publish"
+
 
 const program = new commander.Command();
 
@@ -21,6 +24,16 @@ program
     .action(async (what, name) => {
         // console.log('generate here');
         generate(what, name)
+    });
+
+
+program
+    .command('install [module]')
+    .description('install module')
+    .option('-d, --debug', 'Output additional debugging info')
+    .action(async (module) => {
+        // console.log('generate here');
+        install(module)
     });
 
 
