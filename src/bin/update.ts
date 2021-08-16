@@ -62,7 +62,7 @@ export const update = async (module: any) => {
             }
 
             await exec(
-                `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
+                `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath} && cd ${currentModulePath} && npm i`
             );
         }
     }
