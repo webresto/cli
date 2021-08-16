@@ -30,7 +30,7 @@ export const generate = async (what: any, name: any) => {
                 console.log('git is not exist');
             }
             await exec(
-                `cd ${currentModulePath}/.factory && npm i && cd ${currentModulePath} && .factory/module_init ${name}`
+                `cd ${currentModulePath}/.factory && npm i && cd ${currentModulePath} && .factory/module_init ${name} && npm i`
             );
 
             break;
