@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { exec, config } from 'async-shelljs';
-export const publish = async (module: any, options: any) => {
+export const publish = async (module: any, options?: any) => {
     // if (debug) {
     config.silent = false;
     // } else {
@@ -30,7 +30,6 @@ export const publish = async (module: any, options: any) => {
         
         let package_json = require(process.cwd()+"/package.json");
         module = package_json.name;
-
         if (options.postfix) module += `_${options.postfix}`;
         
         await exec(

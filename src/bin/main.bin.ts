@@ -14,7 +14,8 @@ const program = new commander.Command();
 
 program.version(packgeJSON.version);
 
-
+program.parse(process.argv);
+const options = program.opts();
 
 program
     .command('generate [what] [name]')
@@ -44,12 +45,10 @@ program
     .description('publish module')
     .option('-d, --debug', 'Output additional debugging info')
     .option('-p, --postfix <branch_name>', 'optional postfix to module name ![works only publish from module dir]')
-    .action(async (module) => {
+    .action(async (module: any, options: any) => {
         // console.log('generate here')
-        program.parse(process.argv);
-        const options = program.opts();
         publish(module, options)
-    });
+    }).parse(process.argv);
 
 program
     .command('update [module]')
