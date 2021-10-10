@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { exec, config } from 'async-shelljs';
-export const publish = async (module: any) => {
+export const publish = async (module: any, options: any) => {
     // if (debug) {
     config.silent = false;
     // } else {
@@ -30,6 +30,9 @@ export const publish = async (module: any) => {
         
         let package_json = require(process.cwd()+"/package.json");
         module = package_json.name;
+
+        if (options.postfix) module += `_${options.postfix}`;
+        
         await exec(
             `set -x; cd ${process.cwd()} && tar --exclude='./node_modules' -czvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
         );

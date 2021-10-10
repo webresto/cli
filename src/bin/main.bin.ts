@@ -14,6 +14,8 @@ const program = new commander.Command();
 
 program.version(packgeJSON.version);
 
+
+
 program
     .command('generate [what] [name]')
     .description('Generate new ecosystem object')
@@ -41,9 +43,12 @@ program
     .command('publish [module]')
     .description('publish module')
     .option('-d, --debug', 'Output additional debugging info')
+    .option('-p, --postfix <branch_name>', 'optional postfix to module name')
     .action(async (module) => {
-        // console.log('generate here');
-        publish(module)
+        // console.log('generate here')
+        program.parse(process.argv);
+        const options = program.opts();
+        publish(module, options)
     });
 
 program
