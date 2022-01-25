@@ -1,6 +1,6 @@
 {
   "name": "@webresto/cli",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Starter to create node-command-line utilities",
   "main": "index.js",
   "husky": {

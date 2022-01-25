@@ -18,11 +18,11 @@ export const update = async (module: any) => {
 
         if (fs.existsSync(currentModulePath)) {
             await exec(
-                `set -x;  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
+                `  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
             );
         }
 
-        await exec(`set -x;  mkdir -p ${currentModulePath}`);
+        await exec(`  mkdir -p ${currentModulePath}`);
 
         if ((await exec('curl --version').code) !== 0) {
             throw 'curl not found';
@@ -33,7 +33,7 @@ export const update = async (module: any) => {
         }
 
         await exec(
-            `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
+            ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
         );
     } else {
         const installedModules = readdirSync(modulesPath, {
@@ -47,11 +47,11 @@ export const update = async (module: any) => {
 
             if (fs.existsSync(currentModulePath)) {
                 await exec(
-                    `set -x;  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
+                    `  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
                 );
             }
 
-            await exec(`set -x;  mkdir -p ${currentModulePath}`);
+            await exec(`  mkdir -p ${currentModulePath}`);
 
             if ((await exec('curl --version').code) !== 0) {
                 throw 'curl not found';
@@ -62,7 +62,7 @@ export const update = async (module: any) => {
             }
 
             await exec(
-                `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath} && cd ${currentModulePath} && npm install --only=prod`
+                ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath} && cd ${currentModulePath} && npm install --only=prod`
             );
         }
     }

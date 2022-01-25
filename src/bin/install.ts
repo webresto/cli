@@ -14,12 +14,12 @@ export const install = async (module: any) => {
     let currentModulePath = process.cwd() + '/modules/' + module;
     if (fs.existsSync(currentModulePath)) {
         await exec(
-            `set -x;  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
+            `  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
         );
     } 
 
     await exec(
-        `set -x;  mkdir -p ${currentModulePath}`
+        `  mkdir -p ${currentModulePath}`
     );
         
     if ((await exec('curl --version').code) !== 0) {
@@ -33,7 +33,7 @@ export const install = async (module: any) => {
     
 
     await exec(
-        `set -x; curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
+        ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
     );
 
 
