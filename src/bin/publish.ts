@@ -6,7 +6,6 @@ export const publish = async (module: any, options?: any) => {
     // } else {
     //     config.silent = true;
     // }
-
     if (module) {
         let currentModulePath = process.cwd() + '/modules/' + module;
         if (!fs.existsSync(currentModulePath))
@@ -22,19 +21,19 @@ export const publish = async (module: any, options?: any) => {
         
     
         await exec(
-            ` cd ./modules/${module} && tar --exclude='./node_modules' -czvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
+            ` cd ./modules/${module} && tar --exclude='./.git' -cvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
         );
     } else {
         if (!fs.existsSync(process.cwd()+"/package.json"))
             throw `in not package`;
         
         let package_json = require(process.cwd()+"/package.json");
-        module = package_json.name;
+        module = package_json.name.split('/').pop();
         if (options.postfix) module += `_${options.postfix}`;
         
-        await exec(
-            ` cd ${process.cwd()} && tar --exclude='./node_modules' -czvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
-        );
+
+        let path = process.cwd();
+        await exec(`cd ${path} && tar --exclude='./.git' -cvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`);
     }
     
 

@@ -33,7 +33,7 @@ export const install = async (module: any) => {
     
 
     await exec(
-        ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
+        `curl https://registry.webresto.dev/${module}/${module}.tar  | tar -xv -C ${currentModulePath}`
     );
 
 

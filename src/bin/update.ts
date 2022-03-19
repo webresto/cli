@@ -33,7 +33,7 @@ export const update = async (module: any) => {
         }
 
         await exec(
-            ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath}`
+            `curl https://registry.webresto.dev/${module}/${module}.tar  | tar -xv -C ${currentModulePath}`
         );
     } else {
         const installedModules = readdirSync(modulesPath, {
@@ -62,7 +62,7 @@ export const update = async (module: any) => {
             }
 
             await exec(
-                ` curl https://registry.webresto.dev/${module}/${module}.tar.gz  | tar -xvz -C ${currentModulePath} && cd ${currentModulePath} && npm install --only=prod`
+                ` curl https://registry.webresto.dev/${module}/${module}.tar  | tar -xv -C ${currentModulePath} && cd ${currentModulePath} && npm install --only=prod`
             );
         }
     }
