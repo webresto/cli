@@ -8,7 +8,7 @@ import { upgrade } from "./upgrade"
 import { update } from "./update"
 import { install } from "./install"
 import { publish } from "./publish"
-
+import { repl } from "./repl"
 
 const program = new commander.Command();
 
@@ -57,6 +57,15 @@ program
     .action(async (module) => {
         // console.log('generate here');
         update(module)
+    });
+
+program
+    .command('repl [url]')
+    .description('connect to repl-server')
+    .option('-d, --debug', 'Output additional debugging info')
+    .action(async (url) => {
+        // console.log('generate here');
+        repl(url)
     });
 
 program
