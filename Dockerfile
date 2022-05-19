@@ -14,6 +14,8 @@ RUN apk update && apk upgrade && \
 # fix git.hm problem
 RUN git config --global http.sslverify "false"
 
+RUN  npm config set unsafe-perm true
+
 RUN npm install -g typescript browserify
 WORKDIR /cli
 COPY --from=build ./cli/dist .
