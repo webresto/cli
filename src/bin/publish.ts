@@ -21,7 +21,7 @@ export const publish = async (module: any, options?: any) => {
         
     
         await exec(
-            ` cd ./modules/${module} && tar --exclude='./.git' -cvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`
+            ` cd ./modules/${module} && tar --exclude='./.git' -cvf - . | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload --insecure`
         );
     } else {
         if (!fs.existsSync(process.cwd()+"/package.json"))
@@ -33,7 +33,7 @@ export const publish = async (module: any, options?: any) => {
         
 
         let path = process.cwd();
-        await exec(`cd ${path} && tar --exclude='./.git' -cvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload`);
+        await exec(`cd ${path} && tar --exclude='./.git' -cvf - .  | curl -vX POST -F module=@- -F name=${module} https://registry.webresto.dev/upload --insecure`);
     }
     
 
