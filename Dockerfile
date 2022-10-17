@@ -1,4 +1,4 @@
-FROM node:12-alpine as build
+FROM node:16-alpine as build
 RUN npm install -g typescript    
 WORKDIR /cli
 COPY . .
@@ -6,7 +6,7 @@ RUN npm install
 RUN npm run build
 
 ###
-FROM node:12-alpine as release
+FROM node:16-alpine as release
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git bash curl tar
