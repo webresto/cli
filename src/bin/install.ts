@@ -1,6 +1,9 @@
 import fs from 'fs';
 import { exec, config } from 'async-shelljs';
+import downloadMethod from 'module-registry-client-lib/lib/download';
+
 export const install = async (module: any) => {
+    let modulesPath = process.cwd() + '/modules/';
     if (module) {
         // if (debug) {
         config.silent = false;
@@ -8,58 +11,53 @@ export const install = async (module: any) => {
         //     config.silent = true;
         // }
 
-        let modulesPath = process.cwd() + '/modules/';
         if (!fs.existsSync(modulesPath))
             throw `Dirrectory ${modulesPath} not found`;
 
         let currentModulePath = process.cwd() + '/modules/' + module;
         if (fs.existsSync(currentModulePath)) {
-            await exec(
-                `  mv ${currentModulePath} /tmp/${module}_${Date.now()}`
-            );
+            throw `Module path exist ${currentModulePath}`;
         }
 
-        await exec(`  mkdir -p ${currentModulePath}`);
-
-        if ((await exec('curl --version').code) !== 0) {
-            throw 'curl not found';
-        }
-
-        if ((await exec('tar --version').code) !== 0) {
-            throw 'tar not found';
-        }
-
-        await exec(
-            `curl https://registry.webresto.dev/${module}/${module}.tar  | tar -xv -C ${currentModulePath}`
+        await downloadMethod(
+            module,
+            'latest',
+            process.env.WEBRESTO_LICENSE,
+            modulesPath
         );
-
-        console.log(process.cwd(), module);
     } else {
-        const modulesList = (fs.readFileSync(`${process.cwd()}/webresto-modules.list`, {encoding:'utf8', flag:'r'})).split('\n');
+        let webrestoListFile = `${process.cwd()}/webresto-modules.list`;
+        if (fs.existsSync(webrestoListFile)) {
+            const modulesList = fs
+                .readFileSync(`${process.cwd()}/webresto-modules.list`, {
+                    encoding: 'utf8',
+                    flag: 'r'
+                })
+                .split('\n');
+            for await (let module of modulesList) {
+                if (!module) continue;
 
-        for await (let module of modulesList) {
-            if(!module) continue;
+                let version = 'latest';
+                const moduleAndVersion = module.split('@');
+                if (moduleAndVersion.length === 2) {
+                    module = moduleAndVersion[0];
+                    version = moduleAndVersion[1];
+                }
 
-            let currentModulePath = process.cwd() + '/modules/' + module;
+                let currentModulePath = process.cwd() + '/modules/' + module;
 
-            if (fs.existsSync(currentModulePath)) {
-                console.log("DIRECTORY EXIST " + currentModulePath)
-                continue
+                if (fs.existsSync(currentModulePath)) {
+                    console.info('DIRECTORY EXIST ' + currentModulePath);
+                    continue;
+                }
+
+                await downloadMethod(
+                    module,
+                    version,
+                    process.env.WEBRESTO_LICENSE,
+                    modulesPath
+                );
             }
-
-            await exec(`  mkdir -p ${currentModulePath}`);
-
-            if ((await exec('curl --version').code) !== 0) {
-                throw 'curl not found';
-            }
-
-            if ((await exec('tar --version').code) !== 0) {
-                throw 'tar not found';
-            }
-
-            await exec(
-                ` curl https://registry.webresto.dev/${module}/${module}.tar  | tar -xv -C ${currentModulePath} && cd ${currentModulePath} && npm install --only=prod`
-            );
         }
     }
 };
