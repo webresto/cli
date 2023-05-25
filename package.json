@@ -3,12 +3,6 @@
   "version": "0.1.2",
   "description": "Starter to create node-command-line utilities",
   "main": "index.js",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "{src,__mocks__,bin}/**/*.ts": [
       "prettier --write",
