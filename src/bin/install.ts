@@ -19,9 +19,20 @@ export const install = async (module: any) => {
             throw `Module path exist ${currentModulePath}`;
         }
 
+        if (process.env.WEBRESTO_LICENSE === "undefined") {
+            throw "you must set webresto license"
+        }
+
+        let version = 'latest';
+        const moduleAndVersion = module.split('@');
+        if (moduleAndVersion.length === 2) {
+            module = moduleAndVersion[0];
+            version = moduleAndVersion[1];
+        }
+        
         await downloadMethod(
             module,
-            'latest',
+            version,
             process.env.WEBRESTO_LICENSE,
             modulesPath
         );

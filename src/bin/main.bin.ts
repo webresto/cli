@@ -36,6 +36,7 @@ process.env.WEBRESTO_REGISTRY =
     config.registry ??
     'https://registry.webresto.org/';
 
+process.env.MODULE_STORAGE_URL = process.env.WEBRESTO_REGISTRY;
 process.env.WEBRESTO_LICENSE = process.env.WEBRESTO_LICENSE ?? config.license;
 
 process.env.WEBRESTO_REGISTRY_TOKEN =
