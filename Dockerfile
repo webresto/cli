@@ -1,12 +1,27 @@
-FROM node:16-alpine as build
+FROM node:18-alpine as planner
+WORKDIR /cli
+COPY ./package.json ./package.json
+
+FROM node:18-alpine as cacher-dev
+WORKDIR /cli
+COPY --from=planner /cli/package.json ./package.json 
+RUN npm install
+
+FROM node:18-alpine as cacher
+WORKDIR /cli
+COPY --from=planner /cli/package.json ./package.json 
+RUN npm install --omit=dev
+
+
+FROM node:18-alpine as builder
 RUN npm install -g typescript    
 WORKDIR /cli
+COPY --from=cacher-dev /cli/node_modules ./node_modules
 COPY . .
-RUN npm install
 RUN npm run build
 
 ###
-FROM node:16-alpine as release
+FROM node:18-alpine as release
 
 RUN apk update && apk upgrade && \
     apk add --no-cache git bash curl tar
@@ -14,9 +29,10 @@ RUN apk update && apk upgrade && \
 # fix git.hm problem
 RUN git config --global http.sslverify "false"
 
-RUN  npm config set unsafe-perm true
-
-RUN npm install -g typescript browserify
+RUN npm install -g typescript
 WORKDIR /cli
-COPY --from=build ./cli/dist .
-RUN npm install -g .
+ARG WEBRESTO_REGISTRY_TOKEN
+COPY --from=builder ./cli/dist .
+RUN ln -s /cli/src/bin/main.bin.js /bin/webresto
+RUN chmod +x /bin/webresto
+COPY --from=cacher /cli/node_modules ./node_modules
