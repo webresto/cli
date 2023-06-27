@@ -21,14 +21,7 @@ COPY . .
 RUN npm run build
 
 ###
-FROM node:18-alpine as release
-
-RUN apk update && apk upgrade && \
-    apk add --no-cache git bash curl tar
-
-# fix git.hm problem
-RUN git config --global http.sslverify "false"
-
+FROM node:18-bullseye as release
 RUN npm install -g typescript
 WORKDIR /cli
 ARG WEBRESTO_REGISTRY_TOKEN
