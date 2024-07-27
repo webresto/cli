@@ -1,6 +1,6 @@
 {
   "name": "@webresto/cli",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Webresto command line interface",
   "main": "index.js",
   "lint-staged": {
@@ -60,7 +60,7 @@
     "chalk": "^4.0.0",
     "commander": "^2.19.0",
     "jsonfile": "^5.0.0",
-    "module-registry-client-lib": "^1.1.1",
+    "module-registry-client-lib": "^1.2.0",
     "rc-config-loader": "^4.1.2",
     "readline-history": "^1.2.0",
     "shelljs": "^0.8.4"
