@@ -4,6 +4,7 @@ import downloadMethod from 'module-registry-client-lib/lib/download';
 
 export const install = async (module: any) => {
     let modulesPath = process.cwd() + '/modules/';
+    let channel = process.env.CHANNEL ?? "main"
     if (module) {
         // if (debug) {
         config.silent = false;
@@ -33,6 +34,7 @@ export const install = async (module: any) => {
         await downloadMethod(
             module,
             version,
+            channel,
             process.env.WEBRESTO_LICENSE,
             modulesPath
         );
@@ -65,6 +67,7 @@ export const install = async (module: any) => {
                 await downloadMethod(
                     module,
                     version,
+                    channel,
                     process.env.WEBRESTO_LICENSE,
                     modulesPath
                 );
