@@ -33,7 +33,7 @@ if (!config) config = {};
 
 process.env.WEBRESTO_REGISTRY =
     process.env.WEBRESTO_REGISTRY ??
-    config.registry ??
+    config.registry ?? 'https://registry-v2.webresto.dev/' ??
     'https://registry.webresto.org/';
 
 process.env.MODULE_STORAGE_URL = process.env.WEBRESTO_REGISTRY;

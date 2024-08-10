@@ -1,6 +1,6 @@
 {
   "name": "@webresto/cli",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "Webresto command line interface",
   "main": "index.js",
   "lint-staged": {

@@ -25,7 +25,8 @@ FROM node:18-bullseye as release
 RUN npm install -g typescript
 WORKDIR /cli
 ARG WEBRESTO_REGISTRY_TOKEN
-ARG WEBRESTO_REGISTRY "https://registry-v2.webresto.dev/"
+ARG WEBRESTO_REGISTRY 
+ENV WEBRESTO_REGISTRY "https://registry-v2.webresto.dev/"
 COPY --from=builder ./cli/dist .
 RUN ln -s /cli/src/bin/main.bin.js /bin/webresto
 RUN chmod +x /bin/webresto

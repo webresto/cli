@@ -20,9 +20,9 @@ export const install = async (module: any) => {
             throw `Module path exist ${currentModulePath}`;
         }
 
-        if (process.env.WEBRESTO_LICENSE === "undefined") {
-            throw "you must set webresto license"
-        }
+        // if (process.env.WEBRESTO_LICENSE === "undefined") {
+        //     throw "you must set webresto license"
+        // }
 
         let version = 'latest';
         const moduleAndVersion = module.split('@');
