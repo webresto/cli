@@ -62,9 +62,12 @@ program
     .command('install [module]')
     .description('install module')
     .option('-d, --debug', 'Output additional debugging info')
-    .action(async module => {
-        // console.log('generate here');
-        install(module);
+    .option(
+        '-c, --channel <channel_name>',
+        'channel for donwload'
+    )
+    .action(async (module: any, options: any) => {
+        install(module, options);
     });
 
 program
@@ -72,11 +75,10 @@ program
     .description('publish module')
     .option('-d, --debug', 'Output additional debugging info')
     .option(
-        '-p, --postfix <branch_name>',
-        'optional postfix to module name ![works only publish from module dir]'
+        '-t, --tag <tag_name>',
+        'optional tag to module'
     )
     .action(async (module: any, options: any) => {
-        // console.log('generate here')
         publish(module, options);
     })
     .parse(process.argv);

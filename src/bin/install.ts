@@ -2,9 +2,9 @@ import fs from 'fs';
 import { exec, config } from 'async-shelljs';
 import downloadMethod from 'module-registry-client-lib/lib/download';
 
-export const install = async (module: any) => {
+export const install = async (module: any, options: any) => {
     let modulesPath = process.cwd() + '/modules/';
-    let channel = process.env.CHANNEL ?? "main"
+    let channel = options.channel ?? "main"
     if (module) {
         // if (debug) {
         config.silent = false;

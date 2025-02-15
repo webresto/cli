@@ -4,6 +4,7 @@ import { exec, config } from 'async-shelljs';
 import publishMethod from 'module-registry-client-lib/lib/publish';
 
 export const publish = async (module: any, options?: any) => {
+    
     // if (debug) {
     config.silent = false;
     // } else {
@@ -19,6 +20,7 @@ export const publish = async (module: any, options?: any) => {
         currentModulePath = process.cwd();
     }
 
+
     let userToken = process.env.WEBRESTO_REGISTRY_TOKEN;
-    await publishMethod(currentModulePath, userToken, 'main', 'test note');
+    await publishMethod(currentModulePath, userToken, options.tag ?? 'main', 'test note');
 };
