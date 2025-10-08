@@ -26,7 +26,7 @@ RUN npm install -g typescript
 WORKDIR /cli
 ARG WEBRESTO_REGISTRY_TOKEN
 ARG WEBRESTO_REGISTRY 
-ENV WEBRESTO_REGISTRY "https://registry-v2.webresto.dev/"
+ENV WEBRESTO_REGISTRY "https://marketplace.restoapp.org/"
 COPY --from=builder ./cli/dist .
 RUN ln -s /cli/src/bin/main.bin.js /bin/webresto
 RUN chmod +x /bin/webresto
