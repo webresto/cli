@@ -33,8 +33,9 @@ if (!config) config = {};
 
 process.env.WEBRESTO_REGISTRY =
     process.env.WEBRESTO_REGISTRY ??
+    // @ts-ignore
     config.registry ?? 'https://marketplace.restoapp.org/' ??
-    'https://registry.webresto.org/';
+    'https://marketplace-next.restoapp.org/';
 
 process.env.MODULE_STORAGE_URL = process.env.WEBRESTO_REGISTRY;
 process.env.WEBRESTO_LICENSE = process.env.WEBRESTO_LICENSE ?? config.license;
